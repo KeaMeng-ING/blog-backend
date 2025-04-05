@@ -21,6 +21,8 @@ model post {
   slug       String   @unique
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  imageUrl   String?
+  published  Boolean  @default(false)
   views      Int      @default(0)
   authorId   Int
   author     user     @relation(fields: [authorId], references: [id])
