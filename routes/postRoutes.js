@@ -3,7 +3,7 @@ const app = express();
 const postController = require("../controllers/postController");
 const verifyToken = require("../middleware/verifyToken");
 
-app.get("/", verifyToken, postController.getAllPosts);
+app.get("/", postController.getAllPosts);
 app.post("/", verifyToken, postController.createPost);
 
 module.exports = app;
