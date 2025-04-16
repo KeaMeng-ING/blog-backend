@@ -90,6 +90,16 @@ const postController = {
       res.status(500).json({ message: "Server error" });
     }
   },
+
+  async getAllCategories(req, res) {
+    try {
+      const categories = await prisma.category.findMany();
+      res.json({ categories });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    }
+  },
 };
 
 module.exports = postController;
