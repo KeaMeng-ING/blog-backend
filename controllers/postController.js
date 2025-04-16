@@ -111,6 +111,42 @@ const postController = {
       res.status(500).json({ message: "Server error" });
     }
   },
+
+  async getPostBySlug(req, res) {
+    try {
+      const { slug } = req.params;
+
+      if (!slug) {
+        return res.status(400).json({ message: "Slug is required" });
+      }
+
+      const post = await prisma.post.findUnique({
+        where: { slug },
+        include: {
+          author: {
+            select: {
+              firstName: true,
+              lastName: true,
+            },
+          },
+          category: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+
+      if (!post) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+
+      res.json({ post });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    }
+  },
 };
 
 module.exports = postController;

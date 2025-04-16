@@ -6,5 +6,6 @@ const verifyToken = require("../middleware/verifyToken");
 app.get("/", postController.getAllPosts);
 app.post("/", verifyToken, postController.createPost);
 app.get("/category", verifyToken, postController.getAllCategories);
+app.get("/:slug", verifyToken, postController.getPostBySlug);
 
 module.exports = app;
