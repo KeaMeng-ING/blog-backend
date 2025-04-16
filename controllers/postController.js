@@ -49,7 +49,7 @@ const postController = {
 
   async createPost(req, res) {
     try {
-      const { title, content, subtitle, categoryId, imageUrl } = req.body;
+      const { title, content, subtitle, categoryId, imageData } = req.body;
 
       if (!title || !content) {
         return res.status(400).json({
@@ -57,7 +57,19 @@ const postController = {
         });
       }
 
-      const slug = slugify(title, { lower: true, strict: true });
+      let imageUrl = null;
+      if (imageData) {
+        const uploadResult = await uploadBase64Image(imageData);
+        imageUrl = uploadResult.url;
+      }
+
+      let slug = slugify(title, { lower: true, strict: true });
+
+      // Ensure the slug is unique
+      let existingPost = await prisma.post.findUnique({ where: { slug } });
+      if (existingPost) {
+        slug = `${slug}-${Date.now()}`; // Append timestamp to make it unique
+      }
 
       const newPost = await prisma.post.create({
         data: {
@@ -68,6 +80,7 @@ const postController = {
           authorId: req.authData.id,
           categoryId,
           imageUrl,
+          published: true,
         },
         include: {
           author: {
@@ -83,8 +96,6 @@ const postController = {
         message: "Post created",
         post: newPost,
       });
-
-      // console.log(newPost);
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: "Server error" });
