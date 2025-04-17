@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 const bcrypt = require("bcryptjs");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
@@ -75,4 +73,3 @@ const userController = {
 };
 
 module.exports = userController;
->>>>>>> parent of 3904ad4 (user model update)
