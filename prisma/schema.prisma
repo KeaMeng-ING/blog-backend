@@ -19,6 +19,7 @@ model post {
   title      String
   subtitle   String?
   content    String?
+  slug       String   @unique
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   imageUrl   String?
@@ -36,7 +37,6 @@ model user {
   lastName  String
   username  String?  @unique
   imageUrl  String?  @default("https://www.transparentpng.com/thumb/user/blak-frame-user-profile-png-icon--cupR3D.png")
-  slug      String?  @unique
   email     String   @unique
   password  String
   role      String   @default("user")

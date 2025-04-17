@@ -61,6 +61,7 @@ const userController = {
 
       res.json({
         firstName: user.firstName,
+        userName: user.username,
         id: user.id,
         token,
         message: "Login successful",
