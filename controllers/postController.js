@@ -1,7 +1,9 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
 const slugify = require("slugify");
 const { format } = require("date-fns");
+
+const { PrismaClient } = require("@prisma/client");
+
+const prisma = new PrismaClient();
 
 const postController = {
   async getAllPosts(req, res) {
