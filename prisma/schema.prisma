@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated/client"
 }
 
 datasource db {
@@ -35,8 +34,11 @@ model user {
   id        Int      @id @default(autoincrement())
   firstName String
   lastName  String
+<<<<<<< HEAD
   username  String?  @unique
   imageUrl  String?  @default("https://www.transparentpng.com/thumb/user/blak-frame-user-profile-png-icon--cupR3D.png")
+=======
+>>>>>>> parent of a233424 (update user model)
   email     String   @unique
   password  String
   role      String   @default("user")
