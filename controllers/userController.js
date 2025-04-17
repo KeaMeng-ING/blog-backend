@@ -37,12 +37,11 @@ const userController = {
   },
 
   async logIn(req, res) {
-    console.log("login");
     try {
       const { email, password } = req.body;
       const user = await prisma.user.findUnique({
         where: {
-          email: email,
+          email,
         },
       });
 
@@ -59,6 +58,8 @@ const userController = {
         { expiresIn: "1h" }
       );
 
+      console.log(user);
+
       res.json({
         firstName: user.firstName,
         userName: user.username,
@@ -68,7 +69,7 @@ const userController = {
       });
     } catch (err) {
       console.log(err);
-      next(err);
+      // next(err);
     }
   },
 };
