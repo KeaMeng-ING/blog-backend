@@ -63,6 +63,7 @@ const userController = {
       res.json({
         firstName: user.firstName,
         userName: user.username,
+        imageUrl: user.imageUrl,
         role: user.role,
         id: user.id,
         token,
