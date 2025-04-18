@@ -67,7 +67,7 @@ const userController = {
         role: user.role,
         id: user.id,
         token,
-        message: "Login successful",
+        message: "Login successfull",
       });
     } catch (err) {
       console.log(err);
