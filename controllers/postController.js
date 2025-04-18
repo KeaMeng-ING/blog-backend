@@ -154,6 +154,30 @@ const postController = {
       res.status(500).json({ message: "Server error" });
     }
   },
+
+  async incrementViews(req, res) {
+    try {
+      const { slug } = req.params;
+
+      const post = await prisma.post.update({
+        where: { slug },
+        data: {
+          views: {
+            increment: 1,
+          },
+        },
+      });
+
+      if (!post) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+
+      return res.status(200).json({ views: post.views });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "Server error", error });
+    }
+  },
 };
 
 module.exports = postController;
