@@ -37,7 +37,6 @@ const userController = {
   },
 
   async logIn(req, res) {
-    console.log("login");
     try {
       const { email, password } = req.body;
       const user = await prisma.user.findUnique({
@@ -45,6 +44,8 @@ const userController = {
           email: email,
         },
       });
+
+      console.log(user);
 
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (!passwordMatch) {
@@ -61,6 +62,9 @@ const userController = {
 
       res.json({
         firstName: user.firstName,
+        userName: user.username,
+        imageUrl: user.imageUrl,
+        role: user.role,
         id: user.id,
         token,
         message: "Login successful",
