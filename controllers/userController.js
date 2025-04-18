@@ -36,7 +36,7 @@ const userController = {
     }
   },
 
-  async logIn(req, res) {
+  async logIn(req, res, next) {
     try {
       const { email, password } = req.body;
       const user = await prisma.user.findUnique({
