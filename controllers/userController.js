@@ -6,13 +6,14 @@ const jwt = require("jsonwebtoken");
 const userController = {
   async signUp(req, res, next) {
     try {
-      const { firstName, lastName, email, password } = req.body;
+      const { firstName, lastName, username, email, password } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = await prisma.user.create({
         data: {
           firstName,
           lastName,
           email,
+          username,
           password: hashedPassword,
         },
       });
@@ -26,6 +27,7 @@ const userController = {
       res.json({
         firstName: user.firstName,
         lastName: user.lastName,
+        username: user.username,
         email: user.email,
         token,
         message: "Signup successful",
