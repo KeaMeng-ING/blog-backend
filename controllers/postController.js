@@ -52,7 +52,7 @@ const postController = {
 
   async createPost(req, res) {
     try {
-      const { title, content, subtitle, categoryId, imageData } = req.body;
+      const { title, content, subtitle, categoryId, imageUrl } = req.body;
 
       if (!title || !content) {
         return res.status(400).json({
@@ -60,11 +60,13 @@ const postController = {
         });
       }
 
-      let imageUrl = null;
-      if (imageData) {
-        const uploadResult = await uploadBase64Image(imageData);
+      // let imageUrl = null;
+      if (imageUrl) {
+        const uploadResult = await uploadBase64Image(imageUrl);
         imageUrl = uploadResult.url;
       }
+
+      console.log(imageUrl);
 
       let slug = slugify(title, { lower: true, strict: true });
 
