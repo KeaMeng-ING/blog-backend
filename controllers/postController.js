@@ -61,12 +61,12 @@ const postController = {
       }
 
       // let imageUrl = null;
-      if (imageUrl) {
-        const uploadResult = await uploadBase64Image(imageUrl);
-        imageUrl = uploadResult.url;
-      }
+      // if (imageUrl) {
+      //   const uploadResult = await uploadBase64Image(imageUrl);
+      //   imageUrl = uploadResult.url;
+      // }
 
-      console.log(imageUrl);
+      // console.log(imageUrl);
 
       let slug = slugify(title, { lower: true, strict: true });
 
