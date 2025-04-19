@@ -8,5 +8,6 @@ app.post("/", verifyToken, postController.createPost);
 app.get("/category", verifyToken, postController.getAllCategories);
 app.get("/:slug", verifyToken, postController.getPostBySlugAndSamePosts);
 app.put("/:slug/incrementViews", postController.incrementViews);
+app.get("/profile/:username", verifyToken, postController.getPostsByUsername);
 
 module.exports = app;

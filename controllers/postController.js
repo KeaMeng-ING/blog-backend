@@ -179,6 +179,41 @@ const postController = {
       return res.status(500).json({ message: "Server error", error });
     }
   },
+
+  async getPostsByUsername(req, res) {
+    try {
+      const { username } = req.params;
+
+      const user = await prisma.user.findUnique({
+        where: { username },
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+        },
+      });
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const posts = await prisma.post.findMany({
+        where: { authorId: user.id },
+        include: {
+          category: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+
+      res.json({ posts });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: "Server error" });
+    }
+  },
 };
 
 module.exports = postController;
