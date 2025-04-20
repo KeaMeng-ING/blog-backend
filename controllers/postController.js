@@ -138,7 +138,7 @@ const postController = {
         },
       });
 
-      let message = "Post from another author";
+      let message = "More From The Same Author";
       let postsFromSameAuthor = await prisma.post.findMany({
         where: {
           authorId: post.authorId,
@@ -158,7 +158,7 @@ const postController = {
           },
           take: 6,
         });
-        message = "No posts from this author";
+        message = "Recommended Read";
       }
 
       if (!post) {
