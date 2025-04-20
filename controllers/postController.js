@@ -138,6 +138,7 @@ const postController = {
         },
       });
 
+      let message = "Post from another author";
       let postsFromSameAuthor = await prisma.post.findMany({
         where: {
           authorId: post.authorId,
@@ -157,13 +158,14 @@ const postController = {
           },
           take: 6,
         });
+        message = "No posts from this author";
       }
 
       if (!post) {
         return res.status(404).json({ message: "Post not found" });
       }
 
-      res.json({ post, postsFromSameAuthor });
+      res.json({ post, postsFromSameAuthor, message });
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: "Server error" });
