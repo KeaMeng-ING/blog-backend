@@ -127,7 +127,7 @@ const postController = {
           author: {
             select: {
               firstName: true,
-              lastName: true,
+              username: true,
             },
           },
           category: {
@@ -138,7 +138,7 @@ const postController = {
         },
       });
 
-      const postsFromSameAuthor = await prisma.post.findMany({
+      let postsFromSameAuthor = await prisma.post.findMany({
         where: {
           authorId: post.authorId,
           slug: {
@@ -146,6 +146,18 @@ const postController = {
           },
         },
       });
+
+      if (postsFromSameAuthor.length == 0) {
+        postsFromSameAuthor = await prisma.post.findMany({
+          where: {
+            published: true,
+          },
+          orderBy: {
+            views: "desc",
+          },
+          take: 6,
+        });
+      }
 
       if (!post) {
         return res.status(404).json({ message: "Post not found" });
