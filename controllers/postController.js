@@ -128,6 +128,8 @@ const postController = {
             select: {
               firstName: true,
               username: true,
+              lastName: true,
+              imageUrl: true,
             },
           },
           category: {
