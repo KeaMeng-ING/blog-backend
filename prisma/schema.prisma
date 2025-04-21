@@ -36,7 +36,7 @@ model user {
   firstName String
   lastName  String
   username  String?  @unique
-  imageUrl  String?  @default("https://www.transparentpng.com/thumb/user/blak-frame-user-profile-png-icon--cupR3D.png")
+  imageUrl  String?  @default("https://cdn-icons-png.flaticon.com/512/219/219969.png")
   email     String   @unique
   password  String
   role      String   @default("user")
