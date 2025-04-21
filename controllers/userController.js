@@ -67,6 +67,7 @@ const userController = {
 
       res.json({
         firstName: user.firstName,
+        lastName: user.lastName,
         username: user.username,
         imageUrl: user.imageUrl,
         role: user.role,
