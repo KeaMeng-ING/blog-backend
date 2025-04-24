@@ -39,6 +39,8 @@ const postController = {
           : "Unknown",
         categoryName: post.category ? post.category.name : "Uncategorized",
         createdAt: format(new Date(post.createdAt), "yyyy-MM-dd - HH:mm:ss"), // Format createdAt
+        authorProfileImage: post.author.imageUrl || null, // Use author's imageUrl if available
+        authorUsername: post.author.username || null, // Use author's username if available
         author: undefined, // Remove the original author object
         category: undefined, // Remove the original category object
       }));
