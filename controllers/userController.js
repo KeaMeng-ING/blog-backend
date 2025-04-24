@@ -50,8 +50,6 @@ const userController = {
         },
       });
 
-      console.log(user);
-
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (!passwordMatch) {
         return res.status(401).json({
@@ -73,6 +71,8 @@ const userController = {
         role: user.role,
         id: user.id,
         token,
+        bio: user.bio,
+        email: user.email,
         message: "Login successfull",
       });
     } catch (err) {
