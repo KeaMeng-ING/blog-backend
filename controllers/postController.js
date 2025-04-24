@@ -18,6 +18,8 @@ const postController = {
             select: {
               firstName: true,
               lastName: true,
+              imageUrl: true,
+              username: true,
             },
           },
           category: {
