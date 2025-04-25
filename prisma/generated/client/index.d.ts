@@ -2343,7 +2343,7 @@ export namespace Prisma {
     imageUrl: string | null
     email: string | null
     password: string | null
-    bio: string | null
+    bioProfile: string | null
     role: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2357,7 +2357,7 @@ export namespace Prisma {
     imageUrl: string | null
     email: string | null
     password: string | null
-    bio: string | null
+    bioProfile: string | null
     role: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2371,7 +2371,7 @@ export namespace Prisma {
     imageUrl: number
     email: number
     password: number
-    bio: number
+    bioProfile: number
     role: number
     createdAt: number
     updatedAt: number
@@ -2395,7 +2395,7 @@ export namespace Prisma {
     imageUrl?: true
     email?: true
     password?: true
-    bio?: true
+    bioProfile?: true
     role?: true
     createdAt?: true
     updatedAt?: true
@@ -2409,7 +2409,7 @@ export namespace Prisma {
     imageUrl?: true
     email?: true
     password?: true
-    bio?: true
+    bioProfile?: true
     role?: true
     createdAt?: true
     updatedAt?: true
@@ -2423,7 +2423,7 @@ export namespace Prisma {
     imageUrl?: true
     email?: true
     password?: true
-    bio?: true
+    bioProfile?: true
     role?: true
     createdAt?: true
     updatedAt?: true
@@ -2524,7 +2524,7 @@ export namespace Prisma {
     imageUrl: string | null
     email: string
     password: string
-    bio: string | null
+    bioProfile: string | null
     role: string
     createdAt: Date
     updatedAt: Date
@@ -2557,7 +2557,7 @@ export namespace Prisma {
     imageUrl?: boolean
     email?: boolean
     password?: boolean
-    bio?: boolean
+    bioProfile?: boolean
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2573,7 +2573,7 @@ export namespace Prisma {
     imageUrl?: boolean
     email?: boolean
     password?: boolean
-    bio?: boolean
+    bioProfile?: boolean
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2587,7 +2587,7 @@ export namespace Prisma {
     imageUrl?: boolean
     email?: boolean
     password?: boolean
-    bio?: boolean
+    bioProfile?: boolean
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2601,13 +2601,13 @@ export namespace Prisma {
     imageUrl?: boolean
     email?: boolean
     password?: boolean
-    bio?: boolean
+    bioProfile?: boolean
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type userOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "imageUrl" | "email" | "password" | "bio" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type userOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "username" | "imageUrl" | "email" | "password" | "bioProfile" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type userInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     posts?: boolean | user$postsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2628,7 +2628,7 @@ export namespace Prisma {
       imageUrl: string | null
       email: string
       password: string
-      bio: string | null
+      bioProfile: string | null
       role: string
       createdAt: Date
       updatedAt: Date
@@ -3063,7 +3063,7 @@ export namespace Prisma {
     readonly imageUrl: FieldRef<"user", 'String'>
     readonly email: FieldRef<"user", 'String'>
     readonly password: FieldRef<"user", 'String'>
-    readonly bio: FieldRef<"user", 'String'>
+    readonly bioProfile: FieldRef<"user", 'String'>
     readonly role: FieldRef<"user", 'String'>
     readonly createdAt: FieldRef<"user", 'DateTime'>
     readonly updatedAt: FieldRef<"user", 'DateTime'>
@@ -4628,7 +4628,7 @@ export namespace Prisma {
     imageUrl: 'imageUrl',
     email: 'email',
     password: 'password',
-    bio: 'bio',
+    bioProfile: 'bioProfile',
     role: 'role',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -4848,7 +4848,7 @@ export namespace Prisma {
     imageUrl?: StringNullableFilter<"user"> | string | null
     email?: StringFilter<"user"> | string
     password?: StringFilter<"user"> | string
-    bio?: StringNullableFilter<"user"> | string | null
+    bioProfile?: StringNullableFilter<"user"> | string | null
     role?: StringFilter<"user"> | string
     createdAt?: DateTimeFilter<"user"> | Date | string
     updatedAt?: DateTimeFilter<"user"> | Date | string
@@ -4863,7 +4863,7 @@ export namespace Prisma {
     imageUrl?: SortOrderInput | SortOrder
     email?: SortOrder
     password?: SortOrder
-    bio?: SortOrderInput | SortOrder
+    bioProfile?: SortOrderInput | SortOrder
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4881,7 +4881,7 @@ export namespace Prisma {
     lastName?: StringFilter<"user"> | string
     imageUrl?: StringNullableFilter<"user"> | string | null
     password?: StringFilter<"user"> | string
-    bio?: StringNullableFilter<"user"> | string | null
+    bioProfile?: StringNullableFilter<"user"> | string | null
     role?: StringFilter<"user"> | string
     createdAt?: DateTimeFilter<"user"> | Date | string
     updatedAt?: DateTimeFilter<"user"> | Date | string
@@ -4896,7 +4896,7 @@ export namespace Prisma {
     imageUrl?: SortOrderInput | SortOrder
     email?: SortOrder
     password?: SortOrder
-    bio?: SortOrderInput | SortOrder
+    bioProfile?: SortOrderInput | SortOrder
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4918,7 +4918,7 @@ export namespace Prisma {
     imageUrl?: StringNullableWithAggregatesFilter<"user"> | string | null
     email?: StringWithAggregatesFilter<"user"> | string
     password?: StringWithAggregatesFilter<"user"> | string
-    bio?: StringNullableWithAggregatesFilter<"user"> | string | null
+    bioProfile?: StringNullableWithAggregatesFilter<"user"> | string | null
     role?: StringWithAggregatesFilter<"user"> | string
     createdAt?: DateTimeWithAggregatesFilter<"user"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"user"> | Date | string
@@ -5083,7 +5083,7 @@ export namespace Prisma {
     imageUrl?: string | null
     email: string
     password: string
-    bio?: string | null
+    bioProfile?: string | null
     role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5098,7 +5098,7 @@ export namespace Prisma {
     imageUrl?: string | null
     email: string
     password: string
-    bio?: string | null
+    bioProfile?: string | null
     role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5112,7 +5112,7 @@ export namespace Prisma {
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    bioProfile?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5127,7 +5127,7 @@ export namespace Prisma {
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    bioProfile?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5142,7 +5142,7 @@ export namespace Prisma {
     imageUrl?: string | null
     email: string
     password: string
-    bio?: string | null
+    bioProfile?: string | null
     role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5155,7 +5155,7 @@ export namespace Prisma {
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    bioProfile?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5169,7 +5169,7 @@ export namespace Prisma {
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    bioProfile?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5448,7 +5448,7 @@ export namespace Prisma {
     imageUrl?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    bio?: SortOrder
+    bioProfile?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5466,7 +5466,7 @@ export namespace Prisma {
     imageUrl?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    bio?: SortOrder
+    bioProfile?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5480,7 +5480,7 @@ export namespace Prisma {
     imageUrl?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    bio?: SortOrder
+    bioProfile?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5811,7 +5811,7 @@ export namespace Prisma {
     imageUrl?: string | null
     email: string
     password: string
-    bio?: string | null
+    bioProfile?: string | null
     role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5825,7 +5825,7 @@ export namespace Prisma {
     imageUrl?: string | null
     email: string
     password: string
-    bio?: string | null
+    bioProfile?: string | null
     role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5872,7 +5872,7 @@ export namespace Prisma {
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    bioProfile?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5886,7 +5886,7 @@ export namespace Prisma {
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    bioProfile?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

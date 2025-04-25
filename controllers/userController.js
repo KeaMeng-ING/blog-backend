@@ -48,14 +48,26 @@ const userController = {
         where: {
           email: email,
         },
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          username: true,
+          imageUrl: true,
+          email: true,
+          password: true,
+          role: true,
+          bioProfile: true, // Include bioProfile
+        },
       });
-
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (!passwordMatch) {
         return res.status(401).json({
           message: "Invalid email or password",
         });
       }
+
+      console.log(user);
 
       const token = jwt.sign(
         { id: user.id, email: user.email },
@@ -66,12 +78,12 @@ const userController = {
       res.json({
         firstName: user.firstName,
         lastName: user.lastName,
+        bioProfile: user.bioProfile,
         username: user.username,
         imageUrl: user.imageUrl,
         role: user.role,
         id: user.id,
         token,
-        bio: user.bio,
         email: user.email,
         message: "Login successfull",
       });
@@ -82,7 +94,8 @@ const userController = {
   },
 
   async updateUser(req, res) {
-    const { id, firstName, lastName, username, imageUrl, bio } = req.body;
+    const { id, firstName, lastName, username, imageUrl, bioProfile } =
+      req.body;
 
     if (!id) {
       return res.status(400).json({ message: "User ID is required" });
@@ -104,7 +117,7 @@ const userController = {
       if (lastName !== undefined) updateData.lastName = lastName;
       if (username !== undefined) updateData.username = username;
       if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
-      if (bio !== undefined) updateData.bio = bio;
+      if (bioProfile !== undefined) updateData.bioProfile = bioProfile;
 
       // Update the user with only the provided fields
       const updatedUser = await prisma.user.update({
