@@ -39,6 +39,7 @@ model user {
   imageUrl  String?  @default("https://cdn-icons-png.flaticon.com/512/219/219969.png")
   email     String   @unique
   password  String
+  bio       String?
   role      String   @default("user")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
