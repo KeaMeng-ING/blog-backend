@@ -48,17 +48,6 @@ const userController = {
         where: {
           email: email,
         },
-        select: {
-          id: true,
-          firstName: true,
-          lastName: true,
-          username: true,
-          imageUrl: true,
-          email: true,
-          password: true,
-          role: true,
-          bioProfile: true, // Include bioProfile
-        },
       });
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (!passwordMatch) {
@@ -129,6 +118,45 @@ const userController = {
         message: "User settings updated successfully",
         user: updatedUser,
       });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  },
+
+  async changePassword(req, res) {
+    const { id, oldPassword, newPassword } = req.body;
+
+    if (!id) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    try {
+      // Check if the user exists
+      const user = await prisma.user.findUnique({
+        where: { id: parseInt(id) }, // Make sure id is an integer
+      });
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Check if the old password matches
+      const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+      if (!passwordMatch) {
+        return res.status(401).json({ message: "Old password is incorrect" });
+      }
+
+      // Hash the new password
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+      // Update the user's password
+      await prisma.user.update({
+        where: { id: parseInt(id) },
+        data: { password: hashedNewPassword },
+      });
+
+      res.status(200).json({ message: "Password changed successfully" });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Server error", error: error.message });
