@@ -208,11 +208,6 @@ const postController = {
 
       const user = await prisma.user.findUnique({
         where: { username },
-        select: {
-          id: true,
-          firstName: true,
-          lastName: true,
-        },
       });
 
       if (!user) {
@@ -230,7 +225,7 @@ const postController = {
         },
       });
 
-      res.json({ posts });
+      res.json({ posts, user });
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: "Server error" });
