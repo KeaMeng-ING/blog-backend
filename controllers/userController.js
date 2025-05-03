@@ -9,6 +9,22 @@ const userController = {
       const { firstName, lastName, username, email, password, imageUrl } =
         req.body;
       const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Make sure username is unique
+      const existingUser = await prisma.user.findFirst({
+        where: {
+          OR: [{ username }, { email }],
+        },
+      });
+      if (existingUser) {
+        return res.status(400).json({
+          message:
+            existingUser.username === username
+              ? "Username already exists"
+              : "Email already exists",
+        });
+      }
+
       const user = await prisma.user.create({
         data: {
           firstName,
@@ -61,7 +77,7 @@ const userController = {
       const token = jwt.sign(
         { id: user.id, email: user.email },
         process.env.JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "7d" }
       );
 
       res.json({
