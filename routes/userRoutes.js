@@ -4,6 +4,8 @@ const authMiddleware = require("../middleware/auth");
 const userController = require("../controllers/userController");
 const verifyToken = require("../middleware/verifyToken");
 
+app.get("/useroverview", userController.getUsersOverview);
+app.get("/", verifyToken, userController.getAllUsers);
 app.post("/login", userController.logIn);
 app.post("/signup", userController.signUp);
 app.put("/settings", verifyToken, userController.updateUser);

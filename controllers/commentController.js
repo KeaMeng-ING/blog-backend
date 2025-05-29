@@ -23,7 +23,26 @@ const commentController = {
         },
       });
 
-      return res.status(201).json(comment);
+      // Fetch the user details to include in the response
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+          id: true,
+          username: true,
+          imageUrl: true,
+        },
+      });
+
+      return res.json({
+        id: comment.id,
+        content: comment.content,
+        createdAt: comment.createdAt,
+        user: {
+          id: user.id,
+          username: user.username,
+          imageUrl: user.imageUrl,
+        },
+      });
     } catch (error) {
       console.error("Error creating comment:", error);
       return res.status(500).json({ message: "Internal server error" });
@@ -86,7 +105,23 @@ const commentController = {
         data: { content },
       });
 
-      return res.status(200).json(comment);
+      const userId = comment.userId;
+
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+          id: true,
+          username: true,
+          imageUrl: true,
+        },
+      });
+
+      return res.json({
+        id: comment.id,
+        content: comment.content,
+        createdAt: comment.createdAt,
+        user: { id: user.id, username: user.username, imageUrl: user.imageUrl },
+      });
     } catch (error) {
       console.error("Error updating comment:", error);
       return res.status(500).json({ message: "Internal server error" });

@@ -178,6 +178,142 @@ const userController = {
       res.status(500).json({ message: "Server error", error: error.message });
     }
   },
+
+  async getAllUsers(req, res) {
+    try {
+      // Extract query parameters
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const search = req.query.search;
+      const role = req.query.role;
+
+      // Calculate pagination offsets
+      const skip = (page - 1) * limit;
+
+      // Build the where clause for filtering
+      const where = {};
+
+      // Add search functionality
+      if (search) {
+        where.OR = [
+          { firstName: { contains: search, mode: "insensitive" } },
+          { lastName: { contains: search, mode: "insensitive" } },
+          { email: { contains: search, mode: "insensitive" } },
+          { username: { contains: search, mode: "insensitive" } },
+        ];
+      }
+
+      // Add role filter
+      if (role && role !== "all") {
+        where.role = role;
+      }
+
+      // Count total matching users for pagination
+      const totalUsers = await prisma.user.count({ where });
+
+      // Fetch filtered users with pagination
+      const users = await prisma.user.findMany({
+        where,
+        orderBy: {
+          createdAt: "desc",
+        },
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          username: true,
+          email: true,
+          imageUrl: true,
+          role: true,
+          createdAt: true,
+          _count: {
+            select: {
+              posts: true,
+            },
+          },
+        },
+        skip,
+        take: limit,
+      });
+
+      // Format the response to include post count
+      const formattedUsers = users.map((user) => ({
+        ...user,
+        postCount: user._count.posts,
+      }));
+
+      res.json({
+        users: formattedUsers,
+        total: totalUsers,
+        page,
+        limit,
+        totalPages: Math.ceil(totalUsers / limit),
+      });
+    } catch (err) {
+      console.error("Error fetching users:", err);
+      res.status(500).json({ message: "Server error" });
+    }
+  },
+
+  // Get user overview stats
+  async getUsersOverview(req, res) {
+    try {
+      // Get current date and date one month ago
+      const currentDate = new Date();
+      const oneMonthAgo = new Date();
+      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+      // Get total users count
+      const totalUsers = await prisma.user.count();
+
+      // Get users created in the last month
+      const newSignups = await prisma.user.count({
+        where: {
+          createdAt: {
+            gte: oneMonthAgo,
+          },
+        },
+      });
+
+      // Get users created the month before (for comparison)
+      const twoMonthsAgo = new Date(oneMonthAgo);
+      twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 1);
+
+      const lastMonthSignups = await prisma.user.count({
+        where: {
+          createdAt: {
+            gte: twoMonthsAgo,
+            lt: oneMonthAgo,
+          },
+        },
+      });
+
+      // Calculate change percentages
+      const totalUsersPreviousMonth = await prisma.user.count({
+        where: {
+          createdAt: {
+            lt: oneMonthAgo,
+          },
+        },
+      });
+
+      const totalUserChange = totalUsers - totalUsersPreviousMonth;
+      const newSignupChange = newSignups - lastMonthSignups;
+
+      res.json({
+        totalUsers,
+        totalUserChange,
+        newSignups,
+        newSignupChange:
+          newSignupChange > 0
+            ? `+${newSignupChange}`
+            : newSignupChange.toString(),
+      });
+    } catch (err) {
+      console.error("Error fetching user overview:", err);
+      res.status(500).json({ message: "Server error" });
+    }
+  },
 };
 
 module.exports = userController;

@@ -9,10 +9,83 @@ const prisma = new PrismaClient();
 const postController = {
   async getAllPosts(req, res) {
     try {
+      // Get query parameters with defaults
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const search = req.query.search;
+      const status = req.query.status;
+      const category = req.query.category;
+
+      // Calculate skip value for pagination
+      const skip = (page - 1) * limit;
+
+      // Build the where clause based on filters
+      const whereClause = {};
+
+      // Status filter
+      if (status) {
+        if (status === "published") {
+          whereClause.published = true;
+        } else if (status === "draft") {
+          whereClause.published = false;
+        } else if (status === "scheduled") {
+          whereClause.published = false;
+          whereClause.scheduledAt = { gt: new Date() };
+        }
+      }
+
+      // Category filter
+      if (category && category !== "all") {
+        whereClause.category = {
+          name: {
+            equals: category,
+            mode: "insensitive",
+          },
+        };
+      }
+
+      // Search filter (across title, content, and author name)
+      if (search) {
+        whereClause.OR = [
+          {
+            title: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+          {
+            content: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+          {
+            author: {
+              OR: [
+                {
+                  firstName: {
+                    contains: search,
+                    mode: "insensitive",
+                  },
+                },
+                {
+                  lastName: {
+                    contains: search,
+                    mode: "insensitive",
+                  },
+                },
+              ],
+            },
+          },
+        ];
+      }
+
+      // Get total count for pagination
+      const totalPosts = await prisma.post.count({ where: whereClause });
+
+      // Get posts with pagination
       const posts = await prisma.post.findMany({
-        where: {
-          published: true,
-        },
+        where: whereClause,
         include: {
           author: {
             select: {
@@ -28,10 +101,14 @@ const postController = {
             },
           },
         },
+        skip: skip,
+        take: limit,
+        orderBy: {
+          createdAt: "desc", // Most recent posts first
+        },
       });
 
-      // console.log(posts);
-
+      // Format posts for frontend
       const formattedPosts = posts.map((post) => ({
         ...post,
         authorName: post.author
@@ -45,9 +122,14 @@ const postController = {
         category: undefined, // Remove the original category object
       }));
 
-      // console.log(formattedPosts);
-
-      res.json({ posts: formattedPosts });
+      // Return posts with pagination metadata
+      res.json({
+        posts: formattedPosts,
+        total: totalPosts,
+        page: page,
+        totalPages: Math.ceil(totalPosts / limit),
+        limit: limit,
+      });
     } catch (err) {
       console.log(err);
       res.status(500).json({ message: "Server error" });
@@ -131,6 +213,20 @@ const postController = {
           category: {
             select: {
               name: true,
+            },
+          },
+          comments: {
+            select: {
+              id: true,
+              content: true,
+              createdAt: true,
+              user: {
+                select: {
+                  id: true,
+                  username: true,
+                  imageUrl: true,
+                },
+              },
             },
           },
         },

@@ -59,11 +59,11 @@ model category {
 
 model comment {
   id        Int      @id @default(autoincrement())
-  content   String // The content of the comment
-  createdAt DateTime @default(now()) // Timestamp for when the comment was created
-  updatedAt DateTime @updatedAt // Timestamp for when the comment was last updated
-  postId    Int // Foreign key to the post
-  post      post     @relation(fields: [postId], references: [id]) // Relation to the post model
-  userId    Int // Foreign key to the user who made the comment
-  user      user     @relation(fields: [userId], references: [id]) // Relation to the user model
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  postId    Int
+  post      post     @relation(fields: [postId], references: [id])
+  userId    Int
+  user      user     @relation(fields: [userId], references: [id])
 }
